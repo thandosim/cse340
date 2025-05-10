@@ -22,6 +22,7 @@ body {
 header {
   display: flex;
   justify-content: space-between;
+  padding-inline: 20px;
 }
 
 .siteName {
@@ -106,6 +107,11 @@ h3 {
   padding-left: 2rem;
   padding-right: 2rem;
   background-color: aqua;
+}
+
+header a {
+  text-decoration: none;
+  color: #000;
 }
 
 @media screen and (max-width: 600px) {
