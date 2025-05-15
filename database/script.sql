@@ -241,3 +241,12 @@ VALUES   (
     'White',
     5
   );
+
+UPDATE inventory
+SET inv_description = REPLACE(inv_description, 'small interiors', 'huge interior')
+WHERE inv_description LIKE '%small interiors%';
+
+UPDATE inventory
+SET inv_image = REPLACE (inv_image, 'ages/', 'ages/vehicles/'),
+	inv_thumbnail = REPLACE (inv_thumbnail, 'ages/', 'ages/vehicles/')
+WHERE inv_image LIKE '%ages/%';
