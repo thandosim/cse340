@@ -41,6 +41,10 @@ nav ul {
   padding: 0.3rem;
 }
 
+nav a {
+  color: beige;
+}
+
 main {
   display: flex;
   flex-direction: column;
@@ -141,6 +145,14 @@ header a {
 
 .namePrice {
   width: 150px;
+}
+
+footer {
+  padding: 20px;
+}
+
+footer a {
+
 }
 
 @media screen and (min-width: 600px) {
