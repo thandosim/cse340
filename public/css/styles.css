@@ -151,9 +151,6 @@ footer {
   padding: 20px;
 }
 
-footer a {
-
-}
 
 @media screen and (min-width: 600px) {
   
@@ -204,6 +201,9 @@ main h1 {
 
 section:first-of-type {
   grid-column: 2/3;
+}
+section ul li {
+  padding: 10px;
 }
 
 section:last-of-type {
