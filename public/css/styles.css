@@ -147,6 +147,54 @@ header a {
   width: 150px;
 }
 
+form {
+    background-color: rgb(135, 225, 231);
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    margin-top: 15px;
+    background-color: #0e4a8a;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: medium;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+a {
+    display: block;
+    margin-top: 15px;
+    color: #052e5a;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
 footer {
   padding: 20px;
 }

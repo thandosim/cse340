@@ -17,6 +17,7 @@ const errorController = require("./controllers/errorController");
 const utilities = require("./utilities")
 const session = require("express-session")
 const pool = require('./database/')
+const accountRoute = require('./routes/accountRoute')
 
 /* ***********************
  * Middleware
@@ -52,6 +53,8 @@ app.use(static)
 app.get("/", utilities.handleErrors(baseController.buildHome))
 // Inventory routes
 app.use("/inv", inventoryRoute)
+// Account route
+app.use("/account",accountRoute)
 // Intentional error route
 app.use("/", errorRoute);
 // File Not Found Route - must be last route in list
