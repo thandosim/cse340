@@ -5,9 +5,7 @@
   res.redirect('/')
 } %>
 
-<% if (messages) { %>
-<h1><%= messages() %></h1>
-<% } %>
+<%- messages() %>
 
 <%# register display %>
 

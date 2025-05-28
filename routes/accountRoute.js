@@ -9,6 +9,6 @@ router.get("/login", utilities.handleErrors(accController.buildLogin));
 // Route to build account/register view
 router.get("/register", utilities.handleErrors(accController.buildRegister));
 // Route to Post fome data into database
-router.post('/register', utilities.handleErrors(accountController.registerAccount))
+router.post('/register', utilities.handleErrors(accController.registerAccount))
 
 module.exports = router;
