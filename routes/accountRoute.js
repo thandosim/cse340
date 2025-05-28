@@ -8,6 +8,7 @@ const utilities = require("../utilities")
 router.get("/login", utilities.handleErrors(accController.buildLogin));
 // Route to build account/register view
 router.get("/register", utilities.handleErrors(accController.buildRegister));
-// router.get("/detail/:invId", utilities.handleErrors(invController.buildByInventoryId));
+// Route to Post fome data into database
+router.post('/register', utilities.handleErrors(accountController.registerAccount))
 
 module.exports = router;
