@@ -74,12 +74,14 @@ const accountModel = require("../models/account-model")
       body("account_password")
         .trim()
         .notEmpty()
-        .custom(async (account_email,account_password) => {
-            const passwordMatch = await accountModel.checkMatchingPassword(account_email,account_password)
-            if (!passwordMatch){
-            throw new Error("Password does not match the email. Please use a different email or password")
+        .custom(async (account_password, { req }) => {
+            const email = req.body.account_email; // Extract email from request
+            const passwordMatch = await accountModel.checkMatchingPassword(email, account_password);
+            if (!passwordMatch) {
+            throw new Error("Password does not match the email. Please use a different email or password");
             }
         }),
+
     ]
   }
 
@@ -106,7 +108,7 @@ validate.checkRegData = async (req, res, next) => {
 }
 
   /* ******************************
- * Check data and return errors or continue to registration
+ * Check data and return errors or continue to login
  * ***************************** */
 validate.checkLoginData = async (req, res, next) => {
   const { account_email, account_password } = req.body
