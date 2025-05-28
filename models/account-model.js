@@ -31,7 +31,7 @@ async function checkExistingEmail(account_email){
  * ********************* */
 async function checkMatchingPassword(account_email,account_password){
   try {
-    const sql = "SELECT * FROM public.account WHERE account_email = $1 AND account_password = $1"
+    const sql = "SELECT * FROM public.account WHERE account_email = $1 AND account_password = $2"
     const email = await pool.query(sql, [account_email])
     return email.rowCount
   } catch (error) {
