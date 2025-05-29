@@ -41,4 +41,8 @@ async function getInventoryByInventoryId(inventory_id) {
   }
 }
 
+/* ************************************
+add new classification
+************************************* */
+
 module.exports = {getClassifications, getInventoryByClassificationId, getInventoryByInventoryId}

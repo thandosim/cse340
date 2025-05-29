@@ -8,5 +8,7 @@ const utilities = require("../utilities")
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
 // Route to build detailed vehicle view
 router.get("/detail/:invId", utilities.handleErrors(invController.buildByInventoryId));
+// Route to build management view
+router.get("/", utilities.handleErrors(invController.buildManagement));//consider "/management"
 
 module.exports = router;
