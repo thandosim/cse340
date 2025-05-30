@@ -1,4 +1,6 @@
 const pool = require("../database/")
+const { classificationRules } = require("../utilities/classification-validation")
+const invModel = require("../models/inventory-model");
 
 /* ***************************
  *  Get all classification data
@@ -44,5 +46,32 @@ async function getInventoryByInventoryId(inventory_id) {
 /* ************************************
 add new classification
 ************************************* */
+async function insertClassification(classification_name) {
+    try {
+        const result = await pool.query("INSERT INTO classification (classification_name) VALUES ($1)", [classification_name]);
+        return result.affectedRows > 0;
+    } catch (error) {
+        console.error("Add new classification error " + error);
+        return false;
+    }
+}
 
-module.exports = {getClassifications, getInventoryByClassificationId, getInventoryByInventoryId}
+// // **************************************8
+// // check for existing classificationRules
+// // ***************************************
+// async function checkExistingClassification(classification_name) {
+//   try {
+//     const result = await pool.query(
+//       "SELECT COUNT(*) AS count FROM classification WHERE classification_name = $1",
+//       [classification_name]
+//     );
+//     console.log(result.rows);
+//     return result.rows > 0; // Returns true if classification exists
+//   } catch (error) {
+//     console.error("Error checking classification: " + error);
+//     return false;
+//   }
+// }
+
+
+module.exports = {getClassifications, getInventoryByClassificationId, getInventoryByInventoryId, insertClassification }
