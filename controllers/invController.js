@@ -72,13 +72,6 @@ invCont.processAddClassification = async function (req, res, next) {
     let { classification_name } = req.body;
     let nav = await utilities.getNav();
 
-    // Server-side validation
-    const regex = /^[A-Za-z0-9]+$/;
-    if (!regex.test(classification_name)) {
-        req.flash("error", "Classification name cannot contain spaces or special characters.");
-        return res.redirect("/inv/classification");
-    }
-
     try {
         let success = await invModel.insertClassification(classification_name);
         if (success) {
@@ -104,14 +97,14 @@ invCont.buildAddInventory = async function (req, res, next) {
     let nav = await utilities.getNav();
     let classificationList = await utilities.buildClassificationList();
     let messages = req.flash("info");
-    let errors = req.flash("error");
+    // let errors = req.flash("error");
 
     res.render("./inventory/add-inventory", {
         title: "Add Inventory",
         nav,
         classificationList, // Pass to view
-        messages,
-        errors,
+        // messages,
+        errors: null,
         inv_make: req.body?.inv_make || "",
         inv_model: req.body?.inv_model || "",
         inv_year: req.body?.inv_year || "",

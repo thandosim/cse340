@@ -1,5 +1,4 @@
 const pool = require("../database/")
-const { classificationRules } = require("../utilities/classification-validation")
 
 // **************************************8
 // check for existing classification
