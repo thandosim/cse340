@@ -10,7 +10,7 @@ async function checkExistingClassification(classification_name) {
       [classification_name]
     );
     console.log(result.rows[0].count);
-    return result.rows[0].count > 0; // Returns true if classification exists
+    return result.rows[0].count > 0; 
   } catch (error) {
     console.error("Error checking classification: " + error);
     return false;
@@ -26,7 +26,7 @@ async function checkExistingInventory(inv_make, inv_model, inv_year) {
             "SELECT COUNT(*) AS count FROM inventory WHERE inv_make = $1 AND inv_model = $2 AND inv_year = $3",
             [inv_make, inv_model, inv_year]
         );
-        return result.rows[0].count > 0; // Returns true if inventory exists
+        return result.rows[0].count > 0; 
     } catch (error) {
         console.error("Error checking inventory:", error);
         return false;

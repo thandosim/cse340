@@ -35,22 +35,10 @@ validate.checkClassificationData = async (req, res, next) => {
 
   if (!errors.isEmpty()) {
     req.flash("error", errors.array().map(err => err.msg)); 
-    return res.redirect("/inv/classification"); // Redirect to the controller
+    return res.redirect("/inv/classification"); 
   }
   next();
 };
   
-//   if (!errors.isEmpty()) {
-//     // let nav = await utilities.getNav()
-//     let nav
-//     res.render("inventory/add-classification", {
-//       errors: null,
-//       title: "Add Classification",
-//       nav: null,
-//     });
-//     return;
-//   }
-//   next(); // Proceed if validation passes
-// };
 
 module.exports = validate;

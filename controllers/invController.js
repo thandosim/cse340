@@ -75,7 +75,7 @@ invCont.processAddClassification = async function (req, res, next) {
     try {
         let success = await invModel.insertClassification(classification_name);
         if (success) {
-            nav = await utilities.getNav(); // Refresh navigation to include new classification
+            nav = await utilities.getNav();
             req.flash("info", "Classification added successfully!");
             return res.redirect("/inv/");
         } else {
@@ -97,13 +97,11 @@ invCont.buildAddInventory = async function (req, res, next) {
     let nav = await utilities.getNav();
     let classificationList = await utilities.buildClassificationList();
     let messages = req.flash("info");
-    // let errors = req.flash("error");
 
     res.render("./inventory/add-inventory", {
         title: "Add Inventory",
         nav,
         classificationList, // Pass to view
-        // messages,
         errors: null,
         inv_make: req.body?.inv_make || "",
         inv_model: req.body?.inv_model || "",

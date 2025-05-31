@@ -37,7 +37,6 @@ const accountModel = require("../models/account-model")
             }
         }),
   
-      // password is required and must be strong password
       body("account_password")
         .trim()
         .notEmpty()
@@ -57,11 +56,10 @@ const accountModel = require("../models/account-model")
   * ********************************* */
   validate.loginRules = () => {
     return [
-      // valid email is required and must already exist in the DB
       body("account_email")
         .trim()
         .isEmail()
-        .normalizeEmail() // refer to validator.js docs
+        .normalizeEmail() 
         .withMessage("A valid email is required.")
         .custom(async (account_email) => {
             const emailExists = await accountModel.checkExistingEmail(account_email)
@@ -70,7 +68,6 @@ const accountModel = require("../models/account-model")
             }
         }),
   
-      // password is required and match db record for that email
       body("account_password")
         .trim()
         .notEmpty()
