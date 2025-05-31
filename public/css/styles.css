@@ -178,6 +178,8 @@ button {
     border-radius: 5px;
     cursor: pointer;
     font-size: medium;
+    display: block; /* Ensure button takes full width */
+    width: 100%; /* Adjust width */
 }
 
 button:hover {

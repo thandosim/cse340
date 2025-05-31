@@ -57,21 +57,31 @@ async function insertClassification(classification_name) {
 }
 
 // // **************************************8
-// // check for existing classificationRules
+// // add new inventory item
 // // ***************************************
-// async function checkExistingClassification(classification_name) {
-//   try {
-//     const result = await pool.query(
-//       "SELECT COUNT(*) AS count FROM classification WHERE classification_name = $1",
-//       [classification_name]
-//     );
-//     console.log(result.rows);
-//     return result.rows > 0; // Returns true if classification exists
-//   } catch (error) {
-//     console.error("Error checking classification: " + error);
-//     return false;
-//   }
-// }
+async function insertInventory(vehicle) {
+    try {
+        const result = await pool.query(
+            "INSERT INTO inventory (inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *",
+            [
+                vehicle.inv_make,
+                vehicle.inv_model,
+                vehicle.inv_year,
+                vehicle.inv_description,
+                vehicle.inv_image,
+                vehicle.inv_thumbnail,
+                vehicle.inv_price,
+                vehicle.inv_miles,
+                vehicle.inv_color,
+                vehicle.classification_id,
+            ]
+        );
+        return result.rows[0];
+    } catch (error) {
+        console.error("Error inserting inventory:", error);
+        return false;
+    }
+}
 
 
-module.exports = {getClassifications, getInventoryByClassificationId, getInventoryByInventoryId, insertClassification }
+module.exports = {getClassifications, getInventoryByClassificationId, getInventoryByInventoryId, insertClassification, insertInventory}

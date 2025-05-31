@@ -84,7 +84,7 @@ invCont.processAddClassification = async function (req, res, next) {
         if (success) {
             nav = await utilities.getNav(); // Refresh navigation to include new classification
             req.flash("info", "Classification added successfully!");
-            return res.redirect("/inv/management");
+            return res.redirect("/inv/");
         } else {
             req.flash("error", "Failed to add classification.");
             return res.redirect("/inv/classification");
@@ -97,5 +97,52 @@ invCont.processAddClassification = async function (req, res, next) {
 };
 
 
+/* ***************************
+ *  build add-inventry view
+ * ************************** */
+invCont.buildAddInventory = async function (req, res, next) {
+    let nav = await utilities.getNav();
+    let classificationList = await utilities.buildClassificationList();
+    let messages = req.flash("info");
+    let errors = req.flash("error");
+
+    res.render("./inventory/add-inventory", {
+        title: "Add Inventory",
+        nav,
+        classificationList, // Pass to view
+        messages,
+        errors,
+        inv_make: req.body?.inv_make || "",
+        inv_model: req.body?.inv_model || "",
+        inv_year: req.body?.inv_year || "",
+        inv_description: req.body?.inv_description || "",
+        inv_image: req.body?.inv_image || "/images/no-image.png",
+        inv_thumbnail: req.body?.inv_thumbnail || "/images/no-image.png",
+        inv_price: req.body?.inv_price || "",
+        inv_miles: req.body?.inv_miles || "",
+        inv_color: req.body?.inv_color || "",
+        classification_id: req.body?.classification_id || "",
+    });
+};
+
+/**************************************************** 
+ * process add invetory item
+ * **************************************************/ 
+invCont.processAddInventory = async function (req, res, next) {
+    try {
+        const success = await invModel.insertInventory(req.body);
+        if (success) {
+            req.flash("info", "Inventory item added successfully!");
+            return res.redirect("/inv/");
+        } else {
+            req.flash("error", "Failed to add inventory item.");
+            return res.redirect("/inv/inventory");
+        }
+    } catch (error) {
+        console.error("Database error:", error);
+        req.flash("error", "An error occurred while adding the inventory item.");
+        return res.redirect("/inv/inventory");
+    }
+};
 
 module.exports = invCont
