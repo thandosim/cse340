@@ -23,6 +23,11 @@ validate.inventoryRules = () => {
         body("inv_year")
             .isInt({ min: 1900, max: new Date().getFullYear() })
             .withMessage("Invalid year."),
+
+        body("inv_description")
+            .trim()
+            .isLength({ min: 3 })
+            .withMessage("Descriprition must be at least 3 characters."),
         
         body("inv_price")
             .isFloat({ min: 0 })
