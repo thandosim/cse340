@@ -124,7 +124,7 @@ invCont.processAddInventory = async function (req, res, next) {
                 nav: await utilities.getNav(),
                 classificationList: await utilities.buildClassificationList(),
                 errors: req.flash("error"),
-                locals: req.body // ✅ Keeps previously entered data
+                locals: req.body
             });
         }
     } catch (error) {
@@ -135,7 +135,7 @@ invCont.processAddInventory = async function (req, res, next) {
             nav: await utilities.getNav(),
             classificationList: await utilities.buildClassificationList(),
             errors: req.flash("error"),
-            locals: req.body // ✅ Keeps previously entered data
+            locals: req.body
         });
     }
 };
