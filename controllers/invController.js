@@ -60,7 +60,8 @@ invCont.buildAddClassification = async function (req, res, next) {
     res.render("./inventory/add-classification", {
         title: "Add Classification",
         nav,
-        errors: null
+        errors: null,
+        locals: req.body
     });
 };
 
@@ -103,16 +104,7 @@ invCont.buildAddInventory = async function (req, res, next) {
         nav,
         classificationList, // Pass to view
         errors: null,
-        inv_make: req.body?.inv_make || "",
-        inv_model: req.body?.inv_model || "",
-        inv_year: req.body?.inv_year || "",
-        inv_description: req.body?.inv_description || "",
-        inv_image: req.body?.inv_image || "/images/no-image.png",
-        inv_thumbnail: req.body?.inv_thumbnail || "/images/no-image.png",
-        inv_price: req.body?.inv_price || "",
-        inv_miles: req.body?.inv_miles || "",
-        inv_color: req.body?.inv_color || "",
-        classification_id: req.body?.classification_id || "",
+        locals: req.body
     });
 };
 
@@ -127,13 +119,26 @@ invCont.processAddInventory = async function (req, res, next) {
             return res.redirect("/inv/");
         } else {
             req.flash("error", "Failed to add inventory item.");
-            return res.redirect("/inv/inventory");
+            return res.render("./inventory/add-inventory", {
+                title: "Add Inventory",
+                nav: await utilities.getNav(),
+                classificationList: await utilities.buildClassificationList(),
+                errors: req.flash("error"),
+                locals: req.body // ✅ Keeps previously entered data
+            });
         }
     } catch (error) {
         console.error("Database error:", error);
         req.flash("error", "An error occurred while adding the inventory item.");
-        return res.redirect("/inv/inventory");
+        return res.render("./inventory/add-inventory", {
+            title: "Add Inventory",
+            nav: await utilities.getNav(),
+            classificationList: await utilities.buildClassificationList(),
+            errors: req.flash("error"),
+            locals: req.body // ✅ Keeps previously entered data
+        });
     }
 };
+
 
 module.exports = invCont
