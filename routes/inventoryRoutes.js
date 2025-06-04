@@ -30,6 +30,8 @@ router.post(
     validateInventory.checkInventoryData,
     utilities.handleErrors(invController.processAddInventory)
 );
+//route to build inventory table by id
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 
 
 module.exports = router;
