@@ -53,4 +53,4 @@ async function getAccountByEmail (account_email) {
   }
 }
 
-module.exports = {registerAccount, checkExistingEmail, checkMatchingPassword}
+module.exports = {registerAccount, checkExistingEmail, checkMatchingPassword, getAccountByEmail}
