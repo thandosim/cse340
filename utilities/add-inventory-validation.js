@@ -69,12 +69,78 @@ validate.checkInventoryData = async (req, res, next) => {
         return res.render("./inventory/add-inventory", {
                     title: "Add Inventory",
                     nav,
-                    classificationList: await utilities.buildClassificationList(),
+                    classificationList: await utilities.buildClassificationList(req.body.classification_id),
                     errors: null,
-                    locals: req.body 
+                    locals: req.body
                 });
     }
     next();
 };
+
+/* **********************************
+ *  Update Inventory Validation Rules 
+ * ********************************** */
+validate.updateInventoryRules = () => {
+    return [
+        body("inv_make")
+            .trim()
+            .isLength({ min: 2 })
+            .withMessage("Make must be at least 2 characters."),
+        
+        body("inv_model")
+            .trim()
+            .isLength({ min: 2 })
+            .withMessage("Model must be at least 2 characters."),
+        
+        body("inv_year")
+            .isInt({ min: 1900, max: new Date().getFullYear() })
+            .withMessage("Invalid year."),
+
+        body("inv_description")
+            .trim()
+            .isLength({ min: 3 })
+            .withMessage("Descriprition must be at least 3 characters."),
+        
+        body("inv_price")
+            .isFloat({ min: 0 })
+            .withMessage("Price must be a positive number."),
+        
+        body("inv_miles")
+            .isInt({ min: 0 })
+            .withMessage("Miles must be a non-negative number."),
+        
+        body("inv_color")
+            .trim()
+            .isLength({ min: 3 })
+            .withMessage("Color must be at least 3 characters."),
+        
+        body("classification_id")
+            .notEmpty()
+            .withMessage("You must select a classification."),
+        
+    ];
+};
+
+/* ******************************
+ * Check Validation Data & Return Errors or Continue for update inventory view
+ * ***************************** */
+validate.checkUpdateData = async (req, res, next) => {
+    const inv_id = parseInt(req.params.inv_id);//watch for errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        let nav = await utilities.getNav()
+        req.flash("error", errors.array().map(err => err.msg));
+        return res.render("./inventory/add-inventory", {
+                    title: "Add Inventory",
+                    nav,
+                    classificationList: await utilities.buildClassificationList(req.body.classification_id),
+                    errors: null,
+                    locals: req.body,
+                    inv_id
+                });
+    }
+    next();
+};
+
 
 module.exports = validate;
