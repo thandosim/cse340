@@ -32,6 +32,8 @@ router.post(
 );
 //route to build inventory table by id
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+//route to emodify inventory item
+router.get("/edit/:inv_id", utilities.handleErrors(invController.buildEditInventory))
 
 
 module.exports = router;

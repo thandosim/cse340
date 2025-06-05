@@ -123,7 +123,7 @@ invCont.processAddInventory = async function (req, res, next) {
             return res.render("./inventory/add-inventory", {
                 title: "Add Inventory",
                 nav: await utilities.getNav(),
-                classificationList: await utilities.buildClassificationList(),
+                classificationList: await utilities.buildClassificationList(req.body.classification_id),
                 errors: req.flash("error"),
                 locals: req.body
             });
@@ -134,7 +134,7 @@ invCont.processAddInventory = async function (req, res, next) {
         return res.render("./inventory/add-inventory", {
             title: "Add Inventory",
             nav: await utilities.getNav(),
-            classificationList: await utilities.buildClassificationList(),
+            classificationList: await utilities.buildClassificationList(req.body.classification_id),
             errors: req.flash("error"),
             locals: req.body
         });
@@ -153,5 +153,35 @@ invCont.getInventoryJSON = async (req, res, next) => {
     next(new Error("No data returned"))
   }
 }
+
+/* ***************************
+ *  build edit-inventry view
+ * ************************** */
+invCont.buildEditInventory = async function (req, res, next) {
+    const inv_id = parseInt(req.params.inv_id)
+    let nav = await utilities.getNav();
+    let item = (await invModel.getInventoryByInventoryId(inv_id))[0];
+    let classificationList = await utilities.buildClassificationList(item.classification_id);
+    const itemName = `${item.inv_make} ${item.inv_model}`;
+    let messages = req.flash("info");
+
+    res.render("./inventory/edit-inventory", {
+        title: "Edit " + itemName,
+        nav,
+        classificationList: classificationList, // Pass to view
+        errors: null,
+        inv_id: item.inv_id,
+        inv_make: item.inv_make,
+        inv_model: item.inv_model,
+        inv_year: item.inv_year,
+        inv_description: item.inv_description,
+        inv_image: item.inv_image,
+        inv_thumbnail: item.inv_thumbnail,
+        inv_price: item.inv_price,
+        inv_miles: item.inv_miles,
+        inv_color: item.inv_color,
+        classification_id: item.classification_id
+    });
+};
 
 module.exports = invCont
