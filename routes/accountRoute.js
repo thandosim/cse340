@@ -23,5 +23,21 @@ router.post(
 )
 //route to the Account mnagement view
 router.get("/", utilities.checkLogin, utilities.handleErrors(accController.buildAccountManagement))
+// Route to build the Account Update view
+router.get("/update/:account_id", utilities.checkLogin, utilities.handleErrors(accController.buildUpdateAccount));
+// Route to process account update (first name, last name, email)
+router.post(
+  "/update",
+  regValidate.updateAccountRules(), 
+  regValidate.checkUpdateAccountData,
+  utilities.handleErrors(accController.processAccountUpdate)
+);
+// Route to process password change
+router.post(
+  "/change-password",
+  regValidate.passwordRules(), 
+  regValidate.checkUpdatePasswordData,
+  utilities.handleErrors(accController.processPasswordChange)
+);
 
 module.exports = router;

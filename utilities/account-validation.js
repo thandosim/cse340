@@ -124,4 +124,93 @@ validate.checkLoginData = async (req, res, next) => {
   next()
 }
 
+/*  **********************************
+  *  Account Update Validation Rules
+  * ********************************* */
+validate.updateAccountRules = () => {
+  return [
+    // Validate first name
+    body("account_firstname")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 1 })
+      .withMessage("First name is required."),
+    
+    // Validate last name
+    body("account_lastname")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 2 })
+      .withMessage("Last name is required."),
+    
+    // Validate email and ensure it's not already taken
+    body("account_email")
+      .trim()
+      .isEmail()
+      .normalizeEmail()
+      .withMessage("A valid email is required.")
+      .custom(async (account_email, { req }) => {
+        const emailExists = await accountModel.checkExistingEmail(account_email);
+        if (emailExists > 0 && req.session.user.account_email !== account_email) {
+          throw new Error("Email is already in use by another account.");
+        }
+      }),
+  ];
+};
+
+validate.checkUpdateAccountData = async (req, res, next) => {
+  let errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    res.render("account/update-account", {
+      errors,
+      title: "Update Account",
+      nav,
+      account_firstname: req.body.account_firstname,
+      account_lastname: req.body.account_lastname,
+      account_email: req.body.account_email
+    });
+    return;
+  }
+  next();
+};
+
+validate.passwordRules = () => {
+  return [
+    body("new_password")
+      .trim()
+      .notEmpty()
+      .isStrongPassword({
+        minLength: 12,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+      .withMessage("Password must be at least 12 characters long and contain uppercase, lowercase, numbers, and special characters."),
+  ];
+};
+
+/* ******************************
+ * Check data and return errors or continue to password update
+ * ***************************** */
+validate.checkUpdatePasswordData = async (req, res, next) => {
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    res.render("account/update-account", {
+      errors,
+      title: "Update Account",
+      nav,
+      account_id: req.session.user.account_id // Keeps the session active for user re-entry
+    });
+    return;
+  }
+  next();
+};
+
+
 module.exports = validate

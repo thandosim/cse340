@@ -10,7 +10,7 @@
     <h2>Welcome <%= locals.user.account_firstname %></h2>
     <br>
     <p>You are logged in.</p>
-    <a href="#">Edit Account Information</a>
+    <a href="/account/update/<%= locals.user.account_id %>">Edit Account Information</a>
 <!-- <pre><%= JSON.stringify(locals.user, null, 2) %></pre> -->
     <% if (locals.user.account_type === "Employee" || locals.user.account_type === "Admin") { %>
         <h3 id="inv-management">Inventory Management</h3>
