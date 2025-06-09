@@ -93,6 +93,13 @@ section h3 {
   grid-row: 1/2;
 }
 
+#inv-management {
+  /* grid-column: auto; */
+  grid-row: auto; 
+  /* text-align: center; */
+  /* margin-top: 20px; */
+}
+
 h3 {
   padding-left: 0.5rem;
 }

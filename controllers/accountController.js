@@ -101,7 +101,8 @@ async function accountLogin(req, res) {
       } else {
         res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
       }
-      req.session.user = { account_id: accountData.account_id, account_firstname: accountData.account_firstname };
+      req.session.user = { account_id: accountData.account_id, account_firstname: accountData.account_firstname, account_type: accountData.account_type };
+      console.log("session data: ", req.session.user)
 
       return res.redirect("/account/")
     }
@@ -125,7 +126,7 @@ async function accountLogin(req, res) {
 async function buildAccountManagement(req, res, next) {
   let nav = await utilities.getNav()
   res.render("account/account-management", {
-    title: "Register",
+    title: "Account Management",
     nav,
     errors: null,
     account_firstname: req.user ? req.user.account_firstname : "guest"

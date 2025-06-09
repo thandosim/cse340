@@ -11,4 +11,9 @@
     <br>
     <p>You are logged in.</p>
     <a href="#">Edit Account Information</a>
+<!-- <pre><%= JSON.stringify(locals.user, null, 2) %></pre> -->
+    <% if (locals.user.account_type === "Employee" || locals.user.account_type === "Admin") { %>
+        <h3 id="inv-management">Inventory Management</h3>
+        <p><a href="/inventory">Access Inventory Management</a></p>
+    <% } %>
 </section>
