@@ -153,7 +153,7 @@ async function buildUpdateAccount(req, res, next) {
   res.render("account/update-account", {
     title: "Update Account",
     nav,
-    account: accountData,
+    locals: { account: accountData },
     errors: null
   });
 }
@@ -162,6 +162,7 @@ async function buildUpdateAccount(req, res, next) {
  *  Process account update
  * *************************************** */
 async function processAccountUpdate(req, res) {
+  console.log("Update request received:", req.body);
   let nav = await utilities.getNav();
   const { account_id, account_firstname, account_lastname, account_email } = req.body;
   const emailExists = await accModel.checkExistingEmail(account_email);

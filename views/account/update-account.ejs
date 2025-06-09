@@ -17,20 +17,20 @@
             <!-- First Name -->
             <label for="account_firstname">First Name:</label>
             <input type="text" id="account_firstname" name="account_firstname"
-                   value="<%= locals.user.account_firstname %>" required>
+                   value="<%= locals.account.account_firstname %>" required>
 
             <!-- Last Name -->
             <label for="account_lastname">Last Name:</label>
             <input type="text" id="account_lastname" name="account_lastname"
-                   value="<%= account.account_lastname || '' %>" required>
+                   value="<%= locals.account.account_lastname || '' %>" required>
 
             <!-- Email -->
             <label for="account_email">Email Address:</label>
             <input type="email" id="account_email" name="account_email"
-                   value="<%= account.account_email %>" required>
+                   value="<%= locals.account.account_email %>" required>
 
             <!-- Hidden Account ID -->
-            <input type="hidden" name="account_id" value="<%= locals.user.account_id %>">
+            <input type="hidden" name="account_id" value="<%= locals.account.account_id %>">
 
             <button type="submit">Update Account</button>
         </fieldset>
@@ -50,7 +50,7 @@
             <input type="password" id="new_password" name="new_password" required>
 
             <!-- Hidden Account ID -->
-            <input type="hidden" name="account_id" value="<%= locals.user.account_id %>">
+            <input type="hidden" name="account_id" value="<%= locals.account.account_id %>">
 
             <button type="submit">Change Password</button>
         </fieldset>
