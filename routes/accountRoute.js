@@ -39,5 +39,16 @@ router.post(
   regValidate.checkUpdatePasswordData,
   utilities.handleErrors(accController.processPasswordChange)
 );
+// route to handle logout
+router.get("/logout", (req, res) => {
+  res.clearCookie("jwt"); // Removes the token cookie
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Logout error:", err);
+    }
+    res.redirect("/"); // Redirect user to home view
+  });
+});
+
 
 module.exports = router;
