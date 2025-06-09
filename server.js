@@ -45,6 +45,12 @@ app.use(function(req, res, next){
 //for authentication
 app.use(cookieParser())
 app.use(utilities.checkJWTToken)
+//for authorization after login and dynamic headers
+app.use((req, res, next) => {
+    res.locals.user = req.session.user || null;
+    next();
+});
+
 
 /* ***********************
  * View Engine and Templates 

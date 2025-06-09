@@ -81,6 +81,7 @@ async function accountLogin(req, res) {
   let nav = await utilities.getNav()
   const { account_email, account_password } = req.body
   const accountData = await accModel.getAccountByEmail(account_email)
+  
   if (!accountData) {
     req.flash("notice", "Please check your credentials and try again.")
     res.status(400).render("account/login", {
@@ -100,6 +101,8 @@ async function accountLogin(req, res) {
       } else {
         res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
       }
+      req.session.user = { account_id: accountData.account_id, account_firstname: accountData.account_firstname };
+
       return res.redirect("/account/")
     }
     else {

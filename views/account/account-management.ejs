@@ -7,7 +7,7 @@
 <%- messages() %>
 
 <section>
-    <h2>Welcome <%= account_firstname %></h2>
+    <h2>Welcome <%= locals.user.account_firstname %></h2>
     <br>
     <p>You are logged in.</p>
     <a href="#">Edit Account Information</a>
