@@ -159,4 +159,34 @@ Util.checkJWTToken = (req, res, next) => {
   }
  }
 
+/* ******************************************
+*check user authority level
+********************************************* */
+Util.authorizeInventoryActions = (req, res, next) => {
+    // Retrieve token from cookies
+    const token = req.cookies.jwt;
+
+    if (!token) {
+        req.flash("notice", "You must be logged in to access this section.");
+        return res.redirect('/account/login');
+    }
+
+    try {
+        // Verify and decode the token
+        const userData = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
+        // Check if user is an "Employee" or "Admin"
+        if (userData.account_type === "Employee" || userData.account_type === "Admin") {
+            req.user = userData; // Attach user data to the request
+            return next(); // Allow access
+        } else {
+            req.flash("notice", "Unauthorized: You do not have permission to access inventory management.");
+            return res.redirect('/account/login');
+        }
+    } catch (err) {
+        req.flash("notice", "Invalid or expired session. Please log in again.");
+        return res.redirect('/account/login');
+    }
+}
+
 module.exports = Util
