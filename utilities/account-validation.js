@@ -151,12 +151,12 @@ validate.updateAccountRules = () => {
       .isEmail()
       .normalizeEmail()
       .withMessage("A valid email is required.")
-      .custom(async (account_email, { req }) => {
-        const emailExists = await accountModel.checkExistingEmail(account_email);
-        if (emailExists > 0 && req.session.user.account_email !== account_email) {
-          throw new Error("Email is already in use by another account.");
-        }
-      }),
+      // .custom(async (account_email, { req }) => {
+      //   const emailExists = await accountModel.checkExistingEmail(account_email);
+      //   if (emailExists > 0 && req.session.user.account_email !== account_email) {
+      //     throw new Error("Email is already in use by another account.");
+      //   }
+      // }),
   ];
 };
 

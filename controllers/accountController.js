@@ -165,18 +165,18 @@ async function processAccountUpdate(req, res) {
   console.log("Update request received:", req.body);
   let nav = await utilities.getNav();
   const { account_id, account_firstname, account_lastname, account_email } = req.body;
-  const emailExists = await accModel.checkExistingEmail(account_email);
+  // const emailExists = await accModel.checkExistingEmail(account_email);
 
-  // If the email already exists and belongs to another account, prevent update
-  if (emailExists > 0) {
-    req.flash("notice", "That email is already in use.");
-    return res.render("account/update-account", {
-      title: "Update Account",
-      nav,
-      account: req.body,
-      errors: null
-    });
-  }
+  // // If the email already exists and belongs to another account, prevent update
+  // if (emailExists > 0) {
+  //   req.flash("notice", "That email is already in use.");
+  //   return res.render("account/update-account", {
+  //     title: "Update Account",
+  //     nav,
+  //     account: req.body,
+  //     errors: null
+  //   });
+  // }
 
   // Update account information in the database
   const updateSuccess = await accModel.updateAccount(account_id, account_firstname, account_lastname, account_email);
