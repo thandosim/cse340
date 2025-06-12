@@ -210,7 +210,15 @@ validate.checkUpdatePasswordData = async (req, res, next) => {
       errors,
       title: "Update Account",
       nav,
-      account_id: req.session.user.account_id // Keeps the session active for user re-entry
+      account_id: req.session.user.account_id, // Keeps the session active for user re-entry
+      locals: {
+        account: {
+          account_id: req.session.user.account_id, 
+          account_firstname: req.body.account_firstname, 
+          account_lastname: req.body.account_lastname, 
+          account_email: req.body.account_email
+        }
+      },
     });
     return;
   }

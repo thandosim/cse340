@@ -197,7 +197,7 @@ async function processAccountUpdate(req, res) {
  * *************************************** */
 async function processPasswordChange(req, res) {
   let nav = await utilities.getNav();
-  const { account_id, new_password } = req.body;
+  const { account_id, account_firstname, account_lastname, account_email,new_password } = req.body;
 
   // Ensure the new password meets minimum length requirement
   if (!new_password || new_password.length < 8) {
@@ -205,7 +205,7 @@ async function processPasswordChange(req, res) {
     return res.render("account/update-account", {
       title: "Update Account",
       nav,
-      account: { account_id },
+      account: { account_id, account_firstname, account_lastname, account_email },
       errors: null
     });
   }
