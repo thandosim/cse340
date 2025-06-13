@@ -12,9 +12,9 @@ router.get("/type/:classificationId", utilities.handleErrors(invController.build
 router.get("/detail/:invId", utilities.handleErrors(invController.buildByInventoryId));
 
 // Route to handle purchase page view
-router.get("/purchase/:invId", utilities.handleErrors(invController.buildPurchase));
+router.get("/purchase/:invId", utilities.checkLogin, utilities.handleErrors(invController.buildPurchase));
 // Route to process purchase after confirmation
-router.post("/purchase/complete", utilities.handleErrors(invController.completePurchase));
+router.post("/purchase/complete", utilities.checkLogin, utilities.handleErrors(invController.completePurchase));
 
 
 // Route to build management view

@@ -103,8 +103,10 @@ async function accountLogin(req, res) {
       }
       req.session.user = { account_id: accountData.account_id, account_firstname: accountData.account_firstname, account_type: accountData.account_type };
       console.log("session data: ", req.session.user)
-
-      return res.redirect("/account/")
+      
+      const redirectUrl = req.session.returnTo || "/account/";
+      delete req.session.returnTo;
+      return res.redirect(redirectUrl);
     }
     else {
       req.flash("message notice", "Please check your credentials and try again.")
