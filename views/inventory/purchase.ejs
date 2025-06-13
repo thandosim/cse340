@@ -14,7 +14,7 @@
     <p>Price: $<%= vehicle.inv_price %></p>
     </div>
     
-    <form action="/purchase/complete" method="POST">
+    <form action="/inv/purchase/complete" method="POST">
         <input type="hidden" name="inv_id" value="<%= vehicle.inv_id %>">
 
         <label for="account_firstname">First Name:</label>

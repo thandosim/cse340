@@ -1,0 +1,15 @@
+<%# <!-- heading --> %>
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
+<%# messages() %>
+<div>
+    <h2>Purchase Completed</h2>
+    <p>Thank you, <%= buyerName %>!</p>
+    <p>Your purchase has been successfully processed for your <%= vehicle.inv_make %> <%= vehicle.inv_model %>.</p>
+    <p>A confirmation email has been sent to <%= buyerEmail %>.</p>
+    <a href="/">Go to Home</a>
+</div>

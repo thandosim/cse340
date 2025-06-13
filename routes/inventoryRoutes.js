@@ -13,6 +13,9 @@ router.get("/detail/:invId", utilities.handleErrors(invController.buildByInvento
 
 // Route to handle purchase page view
 router.get("/purchase/:invId", utilities.handleErrors(invController.buildPurchase));
+// Route to process purchase after confirmation
+router.post("/purchase/complete", utilities.handleErrors(invController.completePurchase));
+
 
 // Route to build management view
 router.get("/", 

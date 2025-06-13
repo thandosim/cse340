@@ -1,5 +1,6 @@
 const invModel = require("../models/inventory-model")
 const accModel = require("../models/account-model")
+const purchaseModel = require("../models/purchaseModel")
 const utilities = require("../utilities/")
 
 const invCont = {}
@@ -66,6 +67,39 @@ invCont.buildPurchase = async function (req, res, next) {
     vehicle,
     user: userData, // Pass user data to the view
   });
+};
+
+/* ***************************
+ *  Process purchase and build confirmation  view
+ * ************************** */
+invCont.completePurchase = async function (req, res) {
+    const { inv_id, account_firstname, account_lastname, account_email } = req.body;
+
+    if (!inv_id || !account_firstname || !account_lastname || !account_email) {
+        res.status(400).render("error", { message: "Missing required fields." });
+        return;
+    }
+
+    // Store purchase details in the database
+    const purchaseSuccess = await purchaseModel.recordPurchase(inv_id, account_firstname, account_lastname, account_email);
+    let nav = await utilities.getNav();
+    const vehicleData = await invModel.getInventoryByInventoryId(inv_id);
+    const vehicle = vehicleData[0];
+
+    if (purchaseSuccess) {
+        res.render("inventory/purchase-confirmation", {
+            nav,
+            title: "Congratulations",
+            message: "Your purchase was successful!",
+            vehicle_id: inv_id,
+            buyerName: account_firstname + " " + account_lastname,
+            buyerEmail: account_email,
+            vehicle
+
+        });
+    } else {
+        res.status(500).render("error", { message: "Failed to complete purchase. Please try again later." });
+    }
 };
 
 
