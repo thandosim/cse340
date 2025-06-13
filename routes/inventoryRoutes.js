@@ -10,6 +10,10 @@ const validateInventory = require("../utilities/add-inventory-validation")
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
 // Route to build detailed vehicle view
 router.get("/detail/:invId", utilities.handleErrors(invController.buildByInventoryId));
+
+// Route to handle purchase page view
+router.get("/purchase/:invId", utilities.handleErrors(invController.buildPurchase));
+
 // Route to build management view
 router.get("/", 
   utilities.authorizeInventoryActions,

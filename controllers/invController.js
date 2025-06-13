@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model")
+const accModel = require("../models/account-model")
 const utilities = require("../utilities/")
 
 const invCont = {}
@@ -35,8 +36,41 @@ invCont.buildByInventoryId = async function (req, res, next) {
     title: vehicleYear + " " + vehicleMake + " " + vehicleName,
     nav,
     details,
+    vehicle,
   })
 }
+
+
+/* ***************************
+ *  Build purchase view
+ * ************************** */
+invCont.buildPurchase = async function (req, res, next) {
+  const inventory_id = req.params.invId;
+  const account_id = req.session.user.account_id; // Assuming user is authenticated
+
+  const vehicleData = await invModel.getInventoryByInventoryId(inventory_id);
+  const userData = await accModel.getAccountById(account_id); // Fetch user info
+  console.log("usr data " , userData);
+
+  if (!vehicleData || vehicleData.length === 0) {
+    res.status(404).render("error", { message: "Vehicle not found." });
+    return;
+  }
+
+  let nav = await utilities.getNav();
+  const vehicle = vehicleData[0];
+
+  res.render("inventory/purchase", {
+    title: "Purchase " + vehicle.inv_year + " " + vehicle.inv_make + " " + vehicle.inv_model,
+    nav,
+    vehicle,
+    user: userData, // Pass user data to the view
+  });
+};
+
+
+
+
 
 /* ***************************
  *  Build management view

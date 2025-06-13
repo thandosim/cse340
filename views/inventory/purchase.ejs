@@ -1,0 +1,34 @@
+<%# <!-- heading --> %>
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
+<%# messages() %>
+
+<% if (vehicle) { %>
+    <div>
+    <p> Please verify your details and confirm your purchase.</p>
+
+    <p>Price: $<%= vehicle.inv_price %></p>
+    </div>
+    
+    <form action="/purchase/complete" method="POST">
+        <input type="hidden" name="inv_id" value="<%= vehicle.inv_id %>">
+
+        <label for="account_firstname">First Name:</label>
+        <input type="text" id="account_firstname" name="account_firstname" value="<%= user ? user.account_firstname : '' %>" required>
+
+        <label for="account_lastname">Last Name:</label>
+        <input type="text" id="account_lastname" name="account_lastname" value="<%= user ? user.account_lastname : '' %>" required>
+
+        <label for="account_email">Email:</label>
+        <input type="email" id="account_email" name="account_email" value="<%= user ? user.account_email : '' %>" required>
+
+        <button type="submit">Confirm Purchase</button>
+    </form>
+<% } else { %>
+    <h1>Vehicle not found</h1>
+    <p>Sorry, we couldn't find the requested vehicle.</p>
+<% } %>
